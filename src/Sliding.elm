@@ -3,6 +3,7 @@ module Sliding exposing (Board, Move(..), Size, board, boardFromSeed, move, seed
 import Bitwise
 import Element exposing (Element)
 import Element.Border
+import Element.Font
 import List.Extra
 import Random exposing (Generator)
 
@@ -98,7 +99,7 @@ view attrs game =
                     Basics.identity
                 )
                 <|
-                    [ Element.width <| Element.px 36, Element.height <| Element.px 36 ]
+                    [ Element.width <| Element.px 36, Element.height <| Element.px 36, Element.Font.center ]
 
         renderedBoard =
             game.board
