@@ -12852,6 +12852,29 @@ var $author$project$Sliding$view = F2(
 								game.f))))));
 		return renderedBoard;
 	});
+var $author$project$WinText$requiredString = _Utils_Tuple2(10, 'You win!');
+var $author$project$WinText$strings = _List_fromArray(
+	[
+		_Utils_Tuple2(3, 'A winner is you!'),
+		_Utils_Tuple2(0.1, 'All our win are belong to you!'),
+		_Utils_Tuple2(1, 'Completed!'),
+		_Utils_Tuple2(2, 'Congratulations!'),
+		_Utils_Tuple2(1, 'Congratulations! You win!'),
+		_Utils_Tuple2(5, 'Success!'),
+		_Utils_Tuple2(2, 'Puzzle complete!'),
+		_Utils_Tuple2(2, 'Good job!'),
+		_Utils_Tuple2(2, 'Well done!'),
+		_Utils_Tuple2(1, 'Nicely done!'),
+		_Utils_Tuple2(1, 'Slick moves!')
+	]);
+var $author$project$WinText$text = A2($elm$random$Random$weighted, $author$project$WinText$requiredString, $author$project$WinText$strings);
+var $author$project$WinText$view = A2(
+	$elm$core$Basics$composeR,
+	$elm$random$Random$initialSeed,
+	A2(
+		$elm$core$Basics$composeR,
+		$elm$random$Random$step($author$project$WinText$text),
+		$elm$core$Tuple$first));
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -14504,7 +14527,8 @@ var $author$project$Main$view = function (model) {
 										$mdgriffith$elm_ui$Element$centerX,
 										$mdgriffith$elm_ui$Element$scale(2.0)
 									]),
-								$mdgriffith$elm_ui$Element$text('You win!')) : (model.ah.aC ? A2(
+								$mdgriffith$elm_ui$Element$text(
+									$author$project$WinText$view(seed))) : (model.ah.aC ? A2(
 								$author$project$Main$viewControls,
 								_List_fromArray(
 									[
