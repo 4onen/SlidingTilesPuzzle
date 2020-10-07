@@ -374,7 +374,7 @@ viewBoardGeneratorSidebar nextSize nextSeed =
     in
     case nextSize of
         ( Num height, Num width ) ->
-            if width > 0 && height > 0 then
+            if width > 1 && height > 1 then
                 [ Element.Input.button [ Element.centerX, Element.Border.width 1 ]
                     { onPress = Just (GenerateRandomBoard ( height, width ))
                     , label = Element.text "Generate random board!"
@@ -396,7 +396,7 @@ viewBoardGeneratorSidebar nextSize nextSeed =
                 sizeError
 
         _ ->
-            sizeError
+            []
 
 
 viewControlSidebar : Bool -> Element Msg
