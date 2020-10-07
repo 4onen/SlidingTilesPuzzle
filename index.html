@@ -13039,18 +13039,46 @@ var $author$project$Main$viewControls = F2(
 				},
 				controls));
 	});
-var $author$project$Main$ChangeHeight = function (a) {
-	return {$: 4, a: a};
-};
-var $author$project$Main$ChangeWidth = function (a) {
-	return {$: 3, a: a};
-};
 var $author$project$Main$Sidebar = function (a) {
 	return {$: 0, a: a};
 };
 var $author$project$Main$ToggleSidebar = {$: 0};
 var $mdgriffith$elm_ui$Internal$Model$Left = 0;
 var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX(0);
+var $mdgriffith$elm_ui$Internal$Model$MoveX = function (a) {
+	return {$: 0, a: a};
+};
+var $mdgriffith$elm_ui$Internal$Flag$moveX = $mdgriffith$elm_ui$Internal$Flag$flag(25);
+var $mdgriffith$elm_ui$Element$moveRight = function (x) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
+		$mdgriffith$elm_ui$Internal$Flag$moveX,
+		$mdgriffith$elm_ui$Internal$Model$MoveX(x));
+};
+var $author$project$Main$ChangeHeight = function (a) {
+	return {$: 4, a: a};
+};
+var $author$project$Main$ChangeSeed = function (a) {
+	return {$: 2, a: a};
+};
+var $author$project$Main$ChangeWidth = function (a) {
+	return {$: 3, a: a};
+};
+var $author$project$Main$GenerateRandomBoard = function (a) {
+	return {$: 6, a: a};
+};
+var $author$project$Main$GenerateSeededBoard = F2(
+	function (a, b) {
+		return {$: 5, a: a, b: b};
+	});
+var $author$project$NumberInput$enteredNumber = function (ne) {
+	if (ne.$ === 2) {
+		var n = ne.a;
+		return $elm$core$Maybe$Just(n);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
 var $author$project$NumberInput$entryText = function (ne) {
 	switch (ne.$) {
 		case 2:
@@ -14046,36 +14074,10 @@ var $author$project$NumberInput$input = F4(
 				dH: $author$project$NumberInput$entryText(value)
 			});
 	});
-var $mdgriffith$elm_ui$Internal$Model$MoveX = function (a) {
-	return {$: 0, a: a};
-};
-var $mdgriffith$elm_ui$Internal$Flag$moveX = $mdgriffith$elm_ui$Internal$Flag$flag(25);
-var $mdgriffith$elm_ui$Element$moveRight = function (x) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
-		$mdgriffith$elm_ui$Internal$Flag$moveX,
-		$mdgriffith$elm_ui$Internal$Model$MoveX(x));
-};
-var $author$project$Main$ChangeSeed = function (a) {
-	return {$: 2, a: a};
-};
-var $author$project$Main$GenerateRandomBoard = function (a) {
-	return {$: 6, a: a};
-};
-var $author$project$Main$GenerateSeededBoard = F2(
-	function (a, b) {
-		return {$: 5, a: a, b: b};
-	});
-var $author$project$NumberInput$enteredNumber = function (ne) {
-	if (ne.$ === 2) {
-		var n = ne.a;
-		return $elm$core$Maybe$Just(n);
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $author$project$Main$viewBoardGeneratorSidebar = F2(
+var $author$project$Main$viewBoardGeneratorControls = F2(
 	function (nextSize, nextSeed) {
+		var nextHeight = nextSize.a;
+		var nextWidth = nextSize.b;
 		var sizeError = _List_fromArray(
 			[
 				A2(
@@ -14086,57 +14088,84 @@ var $author$project$Main$viewBoardGeneratorSidebar = F2(
 						$mdgriffith$elm_ui$Element$text('To guarantee a solvable board, width and height must both be greater than one.')
 					]))
 			]);
-		if ((nextSize.a.$ === 2) && (nextSize.b.$ === 2)) {
-			var height = nextSize.a.a;
-			var width = nextSize.b.a;
-			return ((width > 0) && (height > 0)) ? _List_fromArray(
+		var heightWidthEntry = A2(
+			$mdgriffith$elm_ui$Element$row,
+			_List_Nil,
+			_List_fromArray(
 				[
-					A2(
-					$mdgriffith$elm_ui$Element$Input$button,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$centerX,
-							$mdgriffith$elm_ui$Element$Border$width(1)
-						]),
-					{
-						af: $mdgriffith$elm_ui$Element$text('Generate random board!'),
-						aB: $elm$core$Maybe$Just(
-							$author$project$Main$GenerateRandomBoard(
-								_Utils_Tuple2(height, width)))
-					}),
 					A4(
 					$author$project$NumberInput$input,
-					'Seed',
-					$elm$core$Maybe$Just('Number'),
-					A2($elm$core$Basics$composeL, $author$project$Main$Sidebar, $author$project$Main$ChangeSeed),
-					nextSeed),
-					A2(
-					$elm$core$Maybe$withDefault,
-					$mdgriffith$elm_ui$Element$text('Seed must be a number!'),
-					A2(
-						$elm$core$Maybe$map,
-						function (seed) {
-							return A2(
-								$mdgriffith$elm_ui$Element$Input$button,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$centerX,
-										$mdgriffith$elm_ui$Element$Border$width(1)
-									]),
-								{
-									af: $mdgriffith$elm_ui$Element$text('Generate from seed!'),
-									aB: $elm$core$Maybe$Just(
-										A2(
-											$author$project$Main$GenerateSeededBoard,
-											_Utils_Tuple2(height, width),
-											seed))
-								});
-						},
-						$author$project$NumberInput$enteredNumber(nextSeed)))
-				]) : sizeError;
-		} else {
-			return sizeError;
-		}
+					'Height',
+					$elm$core$Maybe$Just('Positive number'),
+					A2($elm$core$Basics$composeL, $author$project$Main$Sidebar, $author$project$Main$ChangeHeight),
+					nextHeight),
+					A4(
+					$author$project$NumberInput$input,
+					'Width',
+					$elm$core$Maybe$Just('Positive number'),
+					A2($elm$core$Basics$composeL, $author$project$Main$Sidebar, $author$project$Main$ChangeWidth),
+					nextWidth)
+				]));
+		return A2(
+			$elm$core$List$append,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$text('Next game:'),
+					heightWidthEntry
+				]),
+			function () {
+				if ((nextSize.a.$ === 2) && (nextSize.b.$ === 2)) {
+					var height = nextSize.a.a;
+					var width = nextSize.b.a;
+					return ((width > 0) && (height > 0)) ? _List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$Input$button,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$centerX,
+									$mdgriffith$elm_ui$Element$Border$width(1)
+								]),
+							{
+								af: $mdgriffith$elm_ui$Element$text('Generate random board!'),
+								aB: $elm$core$Maybe$Just(
+									$author$project$Main$GenerateRandomBoard(
+										_Utils_Tuple2(height, width)))
+							}),
+							A4(
+							$author$project$NumberInput$input,
+							'Seed',
+							$elm$core$Maybe$Just('Number'),
+							A2($elm$core$Basics$composeL, $author$project$Main$Sidebar, $author$project$Main$ChangeSeed),
+							nextSeed),
+							A2(
+							$elm$core$Maybe$withDefault,
+							$mdgriffith$elm_ui$Element$text('Seed must be a number!'),
+							A2(
+								$elm$core$Maybe$map,
+								function (seed) {
+									return A2(
+										$mdgriffith$elm_ui$Element$Input$button,
+										_List_fromArray(
+											[
+												$mdgriffith$elm_ui$Element$centerX,
+												$mdgriffith$elm_ui$Element$Border$width(1)
+											]),
+										{
+											af: $mdgriffith$elm_ui$Element$text('Generate from seed!'),
+											aB: $elm$core$Maybe$Just(
+												A2(
+													$author$project$Main$GenerateSeededBoard,
+													_Utils_Tuple2(height, width),
+													seed))
+										});
+								},
+								$author$project$NumberInput$enteredNumber(nextSeed)))
+						]) : sizeError;
+				} else {
+					return sizeError;
+				}
+			}());
 	});
 var $author$project$Main$SetOnscreenControls = function (a) {
 	return {$: 1, a: a};
@@ -14335,7 +14364,7 @@ var $mdgriffith$elm_ui$Element$Input$defaultCheckbox = function (checked) {
 };
 var $mdgriffith$elm_ui$Element$Input$OnRight = 0;
 var $mdgriffith$elm_ui$Element$Input$labelRight = $mdgriffith$elm_ui$Element$Input$Label(0);
-var $author$project$Main$viewControlSidebar = function (onscreenControlsVisible) {
+var $author$project$Main$viewControlsControls = function (onscreenControlsVisible) {
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
 		_List_Nil,
@@ -14390,9 +14419,6 @@ var $author$project$Main$viewSidebar = F2(
 				aB: $elm$core$Maybe$Just(
 					$author$project$Main$Sidebar($author$project$Main$ToggleSidebar))
 			});
-		var _v1 = nextSize;
-		var nextHeight = _v1.a;
-		var nextWidth = _v1.b;
 		return (!sidebarVisible) ? visibilityToggle : A2(
 			$mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
@@ -14405,31 +14431,10 @@ var $author$project$Main$viewSidebar = F2(
 					$mdgriffith$elm_ui$Element$moveRight(controlsWidth),
 					$mdgriffith$elm_ui$Element$onLeft(visibilityToggle)
 				]),
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$author$project$Main$viewControlSidebar(onscreenControlsVisible),
-						$mdgriffith$elm_ui$Element$text('Next game:'),
-						A2(
-						$mdgriffith$elm_ui$Element$row,
-						_List_Nil,
-						_List_fromArray(
-							[
-								A4(
-								$author$project$NumberInput$input,
-								'Height',
-								$elm$core$Maybe$Just('Positive number'),
-								A2($elm$core$Basics$composeL, $author$project$Main$Sidebar, $author$project$Main$ChangeHeight),
-								nextHeight),
-								A4(
-								$author$project$NumberInput$input,
-								'Width',
-								$elm$core$Maybe$Just('Positive number'),
-								A2($elm$core$Basics$composeL, $author$project$Main$Sidebar, $author$project$Main$ChangeWidth),
-								nextWidth)
-							]))
-					]),
-				A2($author$project$Main$viewBoardGeneratorSidebar, nextSize, nextSeed)));
+			A2(
+				$elm$core$List$cons,
+				$author$project$Main$viewControlsControls(onscreenControlsVisible),
+				A2($author$project$Main$viewBoardGeneratorControls, nextSize, nextSeed)));
 	});
 var $author$project$Main$view = function (model) {
 	return A2(

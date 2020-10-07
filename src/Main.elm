@@ -255,7 +255,7 @@ myOnTouchUp =
 
 
 responsiveEnlargenCondition : Element.Device -> Bool
-responsiveEnlargenCondition {class, orientation} =
+responsiveEnlargenCondition { class, orientation } =
     class == Element.BigDesktop || orientation == Element.Portrait
 
 
@@ -321,9 +321,6 @@ viewControls attrs game =
 viewSidebar : Element.Device -> SidebarModel -> Element Msg
 viewSidebar device { nextSeed, nextSize, onscreenControlsVisible, sidebarVisible } =
     let
-        ( nextHeight, nextWidth ) =
-            nextSize
-
         controlsWidth =
             if responsiveEnlargenCondition device then
                 353
@@ -355,52 +352,57 @@ viewSidebar device { nextSeed, nextSize, onscreenControlsVisible, sidebarVisible
             , Element.moveRight controlsWidth
             , Element.onLeft <| visibilityToggle
             ]
-        <|
-            [ viewControlSidebar onscreenControlsVisible
-            , Element.text "Next game:"
-            , Element.row []
-                [ NumberInput.input "Height" (Just "Positive number") (Sidebar << ChangeHeight) nextHeight
-                , NumberInput.input "Width" (Just "Positive number") (Sidebar << ChangeWidth) nextWidth
-                ]
-            ]
-                ++ viewBoardGeneratorSidebar nextSize nextSeed
+            (viewControlsControls onscreenControlsVisible
+                :: viewBoardGeneratorControls nextSize nextSeed
+            )
 
 
-viewBoardGeneratorSidebar : ( NumberEntry, NumberEntry ) -> NumberEntry -> List (Element Msg)
-viewBoardGeneratorSidebar nextSize nextSeed =
+viewBoardGeneratorControls : ( NumberEntry, NumberEntry ) -> NumberEntry -> List (Element Msg)
+viewBoardGeneratorControls (( nextHeight, nextWidth ) as nextSize) nextSeed =
     let
         sizeError =
             [ Element.paragraph [] [ Element.text "To guarantee a solvable board, width and height must both be greater than one." ] ]
-    in
-    case nextSize of
-        ( Num height, Num width ) ->
-            if width > 1 && height > 1 then
-                [ Element.Input.button [ Element.centerX, Element.Border.width 1 ]
-                    { onPress = Just (GenerateRandomBoard ( height, width ))
-                    , label = Element.text "Generate random board!"
-                    }
-                , NumberInput.input "Seed" (Just "Number") (Sidebar << ChangeSeed) nextSeed
-                , nextSeed
-                    |> NumberInput.enteredNumber
-                    |> Maybe.map
-                        (\seed ->
-                            Element.Input.button [ Element.centerX, Element.Border.width 1 ]
-                                { onPress = Just (GenerateSeededBoard ( height, width ) seed)
-                                , label = Element.text "Generate from seed!"
-                                }
-                        )
-                    |> Maybe.withDefault (Element.text "Seed must be a number!")
+
+        heightWidthEntry =
+            Element.row []
+                [ NumberInput.input "Height" (Just "Positive number") (Sidebar << ChangeHeight) nextHeight
+                , NumberInput.input "Width" (Just "Positive number") (Sidebar << ChangeWidth) nextWidth
                 ]
+    in
+    List.append
+        [ Element.text "Next game:"
+        , heightWidthEntry
+        ]
+        (case nextSize of
+            ( Num height, Num width ) ->
+                if width > 0 && height > 0 then
+                    [ Element.Input.button [ Element.centerX, Element.Border.width 1 ]
+                        { onPress = Just (GenerateRandomBoard ( height, width ))
+                        , label = Element.text "Generate random board!"
+                        }
+                    , NumberInput.input "Seed" (Just "Number") (Sidebar << ChangeSeed) nextSeed
+                    , nextSeed
+                        |> NumberInput.enteredNumber
+                        |> Maybe.map
+                            (\seed ->
+                                Element.Input.button [ Element.centerX, Element.Border.width 1 ]
+                                    { onPress = Just (GenerateSeededBoard ( height, width ) seed)
+                                    , label = Element.text "Generate from seed!"
+                                    }
+                            )
+                        |> Maybe.withDefault (Element.text "Seed must be a number!")
+                    ]
 
-            else
+                else
+                    sizeError
+
+            _ ->
                 sizeError
-
-        _ ->
-            []
+        )
 
 
-viewControlSidebar : Bool -> Element Msg
-viewControlSidebar onscreenControlsVisible =
+viewControlsControls : Bool -> Element Msg
+viewControlsControls onscreenControlsVisible =
     Element.column []
         [ Element.text "Controls:"
         , Element.paragraph [ Element.Font.size 14, Element.paddingXY 20 0 ]
