@@ -254,10 +254,15 @@ myOnTouchUp =
             (.pointer >> .pagePos >> TouchEnd)
 
 
-responsiveText : Int -> Element.DeviceClass -> Element.Attribute msg
-responsiveText base class =
+responsiveEnlargenCondition : Element.Device -> Bool
+responsiveEnlargenCondition {class, orientation} =
+    class == Element.BigDesktop || orientation == Element.Portrait
+
+
+responsiveText : Int -> Element.Device -> Element.Attribute msg
+responsiveText base device =
     Element.Font.size <|
-        if class == Element.BigDesktop then
+        if responsiveEnlargenCondition device then
             base * 2
 
         else
@@ -266,10 +271,10 @@ responsiveText base class =
 
 view : Model -> Html.Html Msg
 view model =
-    Element.layout [ myOnPointerDown, myOnTouchDown, myOnPointerUp, myOnTouchUp, responsiveText 16 model.device.class ] <|
+    Element.layout [ myOnPointerDown, myOnTouchDown, myOnPointerUp, myOnTouchUp, responsiveText 16 model.device ] <|
         Element.el
             [ Element.width Element.fill
-            , Element.onLeft <| viewSidebar model.device.class model.sidebar
+            , Element.onLeft <| viewSidebar model.device model.sidebar
             ]
             (case model.game of
                 Nothing ->
@@ -284,7 +289,7 @@ view model =
                             Element.el [ Element.centerX, Element.scale 2.0 ] <| Element.text "You win!"
 
                           else if model.sidebar.onscreenControlsVisible then
-                            viewControls [ Element.centerX, Element.spacing 20, responsiveText 30 model.device.class ] game
+                            viewControls [ Element.centerX, Element.spacing 20, responsiveText 30 model.device ] game
 
                           else
                             Element.none
@@ -313,21 +318,21 @@ viewControls attrs game =
         |> Element.row attrs
 
 
-viewSidebar : Element.DeviceClass -> SidebarModel -> Element Msg
-viewSidebar deviceClass { nextSeed, nextSize, onscreenControlsVisible, sidebarVisible } =
+viewSidebar : Element.Device -> SidebarModel -> Element Msg
+viewSidebar device { nextSeed, nextSize, onscreenControlsVisible, sidebarVisible } =
     let
         ( nextHeight, nextWidth ) =
             nextSize
 
         controlsWidth =
-            if deviceClass == Element.BigDesktop then
+            if responsiveEnlargenCondition device then
                 353
 
             else
                 222
 
         visibilityToggle =
-            Element.Input.button [ Element.moveRight controlsWidth, responsiveText 30 deviceClass ]
+            Element.Input.button [ Element.moveRight controlsWidth, responsiveText 30 device ]
                 { onPress = Just <| Sidebar ToggleSidebar
                 , label =
                     Element.text <|
@@ -384,7 +389,7 @@ viewBoardGeneratorSidebar nextSize nextSeed =
                                 , label = Element.text "Generate from seed!"
                                 }
                         )
-                    |> Maybe.withDefault (Element.text "The seed must be a number!")
+                    |> Maybe.withDefault (Element.text "Seed must be a number!")
                 ]
 
             else
