@@ -5,6 +5,7 @@ import Browser.Dom
 import Browser.Events
 import Dict
 import Element exposing (Element)
+import Element.Background
 import Element.Border
 import Element.Font
 import Element.Input
@@ -351,6 +352,7 @@ viewSidebar device { nextSeed, nextSize, onscreenControlsVisible, sidebarVisible
             , Element.width <| Element.px controlsWidth
             , Element.moveRight controlsWidth
             , Element.onLeft <| visibilityToggle
+            , Element.Background.color (Element.rgb 1 1 1)
             ]
             (viewControlsControls onscreenControlsVisible
                 :: viewBoardGeneratorControls nextSize nextSeed
