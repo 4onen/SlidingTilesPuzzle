@@ -16,6 +16,7 @@ import NumberInput exposing (NumberEntry(..))
 import Random
 import Sliding exposing (Board, Move(..))
 import Task
+import WinText
 
 
 type Msg
@@ -287,7 +288,7 @@ view model =
                         [ (String.fromInt >> (++) "Seed: " >> Element.text >> Element.el [ Element.centerX, Element.alignTop ]) seed
                         , Sliding.view [ Element.centerX, Element.centerY ] game
                         , if Sliding.won game then
-                            Element.el [ Element.centerX, Element.scale 2.0 ] <| Element.text "You win!"
+                            Element.el [ Element.centerX, Element.scale 2.0 ] <| Element.text <| WinText.view seed
 
                           else if model.sidebar.onscreenControlsVisible then
                             viewControls [ Element.centerX, Element.spacing 20, responsiveText 30 model.device ] game
