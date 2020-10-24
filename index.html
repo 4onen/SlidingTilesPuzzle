@@ -4861,10 +4861,10 @@ var $elm$core$Array$builderToArray = F2(
 		if (!builder.c) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.e),
+				$elm$core$Elm$JsArray$length(builder.f),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.e);
+				builder.f);
 		} else {
 			var treeLen = builder.c * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
@@ -4873,10 +4873,10 @@ var $elm$core$Array$builderToArray = F2(
 			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.c);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.e) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.f) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.e);
+				builder.f);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4889,7 +4889,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{g: nodeList, c: (len / $elm$core$Array$branchFactor) | 0, e: tail});
+					{g: nodeList, c: (len / $elm$core$Array$branchFactor) | 0, f: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -5375,7 +5375,7 @@ var $elm$core$Tuple$mapBoth = F3(
 	});
 var $author$project$Sliding$Board = F3(
 	function (width, board, space) {
-		return {f: board, h: space, bO: width};
+		return {e: board, h: space, bO: width};
 	});
 var $elm$core$Bitwise$and = _Bitwise_and;
 var $elm$core$Basics$negate = function (n) {
@@ -5618,11 +5618,11 @@ var $author$project$Sliding$makeSolvable = function (game) {
 					A2(
 						$elm$core$List$map,
 						$elm$core$Basics$gt(val),
-						A2($elm$core$List$drop, idx + 1, game.f)));
+						A2($elm$core$List$drop, idx + 1, game.e)));
 			}),
 		false,
-		game.f);
-	var height = 1 + (($elm$core$List$length(game.f) / game.bO) | 0);
+		game.e);
+	var height = 1 + (($elm$core$List$length(game.e) / game.bO) | 0);
 	var spaceRowFromBottomOneIndexed = height - spaceRow;
 	var _v0 = _Utils_Tuple3(
 		isEven(game.bO),
@@ -5633,7 +5633,7 @@ var $author$project$Sliding$makeSolvable = function (game) {
 			return _Utils_update(
 				game,
 				{
-					f: swapFirstTwo(game.f)
+					e: swapFirstTwo(game.e)
 				});
 		} else {
 			return game;
@@ -5646,7 +5646,7 @@ var $author$project$Sliding$makeSolvable = function (game) {
 				return _Utils_update(
 					game,
 					{
-						f: swapFirstTwo(game.f)
+						e: swapFirstTwo(game.e)
 					});
 			}
 		} else {
@@ -5654,7 +5654,7 @@ var $author$project$Sliding$makeSolvable = function (game) {
 				return _Utils_update(
 					game,
 					{
-						f: swapFirstTwo(game.f)
+						e: swapFirstTwo(game.e)
 					});
 			} else {
 				return game;
@@ -6234,10 +6234,10 @@ var $elm$core$List$sort = function (xs) {
 };
 var $author$project$Sliding$won = function (game) {
 	return _Utils_eq(
-		$elm$core$List$sort(game.f),
-		game.f) && _Utils_eq(
+		$elm$core$List$sort(game.e),
+		game.e) && _Utils_eq(
 		game.h,
-		$elm$core$List$length(game.f));
+		$elm$core$List$length(game.e));
 };
 var $author$project$Main$keySubs = function (_v0) {
 	var game = _v0.M;
@@ -6518,21 +6518,21 @@ var $author$project$Sliding$moveSpaceTo = F2(
 			$elm$core$Maybe$map,
 			function (targetValue) {
 				var spaceWithoutTargetIndex = (_Utils_cmp(target, game.h) < 0) ? (game.h - 1) : game.h;
-				var boardWithoutTarget = A2($elm_community$list_extra$List$Extra$removeAt, targetIdx, game.f);
+				var boardWithoutTarget = A2($elm_community$list_extra$List$Extra$removeAt, targetIdx, game.e);
 				var _v0 = A2($elm_community$list_extra$List$Extra$splitAt, spaceWithoutTargetIndex, boardWithoutTarget);
 				var beginning = _v0.a;
 				var end = _v0.b;
 				return _Utils_update(
 					game,
 					{
-						f: A2(
+						e: A2(
 							$elm$core$List$append,
 							beginning,
 							A2($elm$core$List$cons, targetValue, end)),
 						h: target
 					});
 			},
-			A2($elm_community$list_extra$List$Extra$getAt, targetIdx, game.f));
+			A2($elm_community$list_extra$List$Extra$getAt, targetIdx, game.e));
 	});
 var $author$project$Sliding$move = F2(
 	function (dir, game) {
@@ -12737,12 +12737,6 @@ var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 var $mdgriffith$elm_ui$Element$text = function (content) {
 	return $mdgriffith$elm_ui$Internal$Model$Text(content);
 };
-var $mdgriffith$elm_ui$Internal$Model$Class = F2(
-	function (a, b) {
-		return {$: 3, a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$fontAlignment = $mdgriffith$elm_ui$Internal$Flag$flag(12);
-var $mdgriffith$elm_ui$Element$Font$center = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontAlignment, $mdgriffith$elm_ui$Internal$Style$classes.dI);
 var $elm_community$list_extra$List$Extra$greedyGroupsOfWithStep = F3(
 	function (size, step, xs) {
 		var xs_ = A2($elm$core$List$drop, step, xs);
@@ -12757,10 +12751,6 @@ var $elm_community$list_extra$List$Extra$greedyGroupsOf = F2(
 	function (size, xs) {
 		return A3($elm_community$list_extra$List$Extra$greedyGroupsOfWithStep, size, size, xs);
 	});
-var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
-	return {$: 0, a: a};
-};
-var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
 var $mdgriffith$elm_ui$Internal$Model$AsRow = 0;
 var $mdgriffith$elm_ui$Internal$Model$asRow = 0;
 var $mdgriffith$elm_ui$Element$row = F2(
@@ -12781,6 +12771,36 @@ var $mdgriffith$elm_ui$Element$row = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
+var $mdgriffith$elm_ui$Internal$Flag$borderColor = $mdgriffith$elm_ui$Internal$Flag$flag(28);
+var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderColor,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Colored,
+			'bc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(clr),
+			'border-color',
+			clr));
+};
+var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
+	return {$: 0, a: a};
+};
+var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
+var $mdgriffith$elm_ui$Element$rgb = F3(
+	function (r, g, b) {
+		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, r, g, b, 1);
+	});
+var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
+var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderRound,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$Single,
+			'br-' + $elm$core$String$fromInt(radius),
+			'border-radius',
+			$elm$core$String$fromInt(radius) + 'px'));
+};
 var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
 		return {$: 6, a: a, b: b, c: c, d: d, e: e};
@@ -12797,22 +12817,107 @@ var $mdgriffith$elm_ui$Element$Border$width = function (v) {
 			v,
 			v));
 };
-var $author$project$Sliding$view = F2(
-	function (attrs, game) {
-		var tileel = function (is_space) {
-			return $mdgriffith$elm_ui$Element$el(
-				((!is_space) ? $elm$core$List$cons(
-					$mdgriffith$elm_ui$Element$Border$width(1)) : $elm$core$Basics$identity)(
+var $mdgriffith$elm_ui$Element$Border$widthXY = F2(
+	function (x, y) {
+		return A2(
+			$mdgriffith$elm_ui$Internal$Model$StyleClass,
+			$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+			A5(
+				$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+				'b-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
+				y,
+				x,
+				y,
+				x));
+	});
+var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
+	var bottom = _v0.cg;
+	var top = _v0.dZ;
+	var left = _v0.c1;
+	var right = _v0.dl;
+	return (_Utils_eq(top, bottom) && _Utils_eq(left, right)) ? (_Utils_eq(top, right) ? $mdgriffith$elm_ui$Element$Border$width(top) : A2($mdgriffith$elm_ui$Element$Border$widthXY, left, top)) : A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
+			'b-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left))))))),
+			top,
+			right,
+			bottom,
+			left));
+};
+var $author$project$Sliding$viewTile = F2(
+	function (_v0, value) {
+		var width = _v0.a;
+		var height = _v0.b;
+		var tileSize = 36;
+		if (value.$ === 1) {
+			return A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$width(
+						$mdgriffith$elm_ui$Element$px(tileSize + 2)),
+						$mdgriffith$elm_ui$Element$height(
+						$mdgriffith$elm_ui$Element$px(tileSize + 2))
+					]),
+				$mdgriffith$elm_ui$Element$none);
+		} else {
+			var n = value.a;
+			var borderIf = function (cond) {
+				return cond ? 3 : 0;
+			};
+			var borders = $mdgriffith$elm_ui$Element$Border$widthEach(
+				{
+					cg: borderIf(
+						_Utils_cmp(n - 1, height * width) > -1),
+					c1: borderIf(
+						!A2($elm$core$Basics$modBy, width, n - 1)),
+					dl: borderIf(
+						_Utils_eq(
+							A2($elm$core$Basics$modBy, width, n - 1),
+							width - 1)),
+					dZ: borderIf(
+						_Utils_cmp(n - 1, width) < 0)
+				});
+			return A2(
+				$mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Border$width(1),
+						$mdgriffith$elm_ui$Element$Border$rounded(3)
+					]),
+				A2(
+					$mdgriffith$elm_ui$Element$el,
 					_List_fromArray(
 						[
 							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(36)),
+							$mdgriffith$elm_ui$Element$px(tileSize)),
 							$mdgriffith$elm_ui$Element$height(
-							$mdgriffith$elm_ui$Element$px(36)),
-							$mdgriffith$elm_ui$Element$Font$center
-						])));
-		};
-		var renderedBoard = A2(
+							$mdgriffith$elm_ui$Element$px(tileSize)),
+							borders,
+							$mdgriffith$elm_ui$Element$Border$rounded(3),
+							$mdgriffith$elm_ui$Element$Border$color(
+							A3($mdgriffith$elm_ui$Element$rgb, 0.5, 0.5, 0.5))
+						]),
+					A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$centerX,
+								$mdgriffith$elm_ui$Element$centerY,
+								$mdgriffith$elm_ui$Element$Font$size(16)
+							]),
+						$mdgriffith$elm_ui$Element$text(
+							$elm$core$String$fromInt(n)))));
+		}
+	});
+var $author$project$Sliding$view = F2(
+	function (attrs, game) {
+		var gameHeight = ($elm$core$List$length(game.e) / game.bO) | 0;
+		var tileel = $author$project$Sliding$viewTile(
+			_Utils_Tuple2(game.bO, gameHeight));
+		return A2(
 			$mdgriffith$elm_ui$Element$column,
 			attrs,
 			A2(
@@ -12834,7 +12939,7 @@ var $author$project$Sliding$view = F2(
 							beginning,
 							A2(
 								$elm$core$List$cons,
-								A2(tileel, true, $mdgriffith$elm_ui$Element$none),
+								tileel($elm$core$Maybe$Nothing),
 								end));
 					}(
 						A2(
@@ -12842,15 +12947,8 @@ var $author$project$Sliding$view = F2(
 							game.h,
 							A2(
 								$elm$core$List$map,
-								A2(
-									$elm$core$Basics$composeR,
-									$elm$core$String$fromInt,
-									A2(
-										$elm$core$Basics$composeR,
-										$mdgriffith$elm_ui$Element$text,
-										tileel(false))),
-								game.f))))));
-		return renderedBoard;
+								A2($elm$core$Basics$composeR, $elm$core$Maybe$Just, tileel),
+								game.e))))));
 	});
 var $author$project$WinText$requiredString = _Utils_Tuple2(10, 'You win!');
 var $author$project$WinText$strings = _List_fromArray(
@@ -12959,6 +13057,10 @@ var $mdgriffith$elm_ui$Element$Input$onKeyLookup = function (lookup) {
 				},
 				isKey)));
 };
+var $mdgriffith$elm_ui$Internal$Model$Class = F2(
+	function (a, b) {
+		return {$: 3, a: a, b: b};
+	});
 var $mdgriffith$elm_ui$Internal$Flag$cursor = $mdgriffith$elm_ui$Internal$Flag$flag(21);
 var $mdgriffith$elm_ui$Element$pointer = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$cursor, $mdgriffith$elm_ui$Internal$Style$classes.cx);
 var $mdgriffith$elm_ui$Element$Input$space = ' ';
@@ -13023,6 +13125,8 @@ var $mdgriffith$elm_ui$Element$Input$button = F2(
 				_List_fromArray(
 					[label])));
 	});
+var $mdgriffith$elm_ui$Internal$Flag$fontAlignment = $mdgriffith$elm_ui$Internal$Flag$flag(12);
+var $mdgriffith$elm_ui$Element$Font$center = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontAlignment, $mdgriffith$elm_ui$Internal$Style$classes.dI);
 var $author$project$Main$viewControls = F2(
 	function (attrs, game) {
 		var controls = _List_fromArray(
@@ -13088,10 +13192,6 @@ var $mdgriffith$elm_ui$Element$moveRight = function (x) {
 		$mdgriffith$elm_ui$Internal$Flag$moveX,
 		$mdgriffith$elm_ui$Internal$Model$MoveX(x));
 };
-var $mdgriffith$elm_ui$Element$rgb = F3(
-	function (r, g, b) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, r, g, b, 1);
-	});
 var $author$project$Main$ChangeHeight = function (a) {
 	return {$: 4, a: a};
 };
@@ -13284,17 +13384,6 @@ var $mdgriffith$elm_ui$Element$Input$calcMoveToCompensateForPadding = function (
 };
 var $mdgriffith$elm_ui$Internal$Flag$overflow = $mdgriffith$elm_ui$Internal$Flag$flag(20);
 var $mdgriffith$elm_ui$Element$clip = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.cq);
-var $mdgriffith$elm_ui$Internal$Flag$borderColor = $mdgriffith$elm_ui$Internal$Flag$flag(28);
-var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderColor,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Colored,
-			'bc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(clr),
-			'border-color',
-			clr));
-};
 var $mdgriffith$elm_ui$Element$Input$darkGrey = A3($mdgriffith$elm_ui$Element$rgb, 186 / 255, 189 / 255, 182 / 255);
 var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
 	function (a, b, c, d, e) {
@@ -13331,17 +13420,6 @@ var $mdgriffith$elm_ui$Element$paddingXY = F2(
 		}
 	});
 var $mdgriffith$elm_ui$Element$Input$defaultTextPadding = A2($mdgriffith$elm_ui$Element$paddingXY, 12, 12);
-var $mdgriffith$elm_ui$Internal$Flag$borderRound = $mdgriffith$elm_ui$Internal$Flag$flag(17);
-var $mdgriffith$elm_ui$Element$Border$rounded = function (radius) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderRound,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Single,
-			'br-' + $elm$core$String$fromInt(radius),
-			'border-radius',
-			$elm$core$String$fromInt(radius) + 'px'));
-};
 var $mdgriffith$elm_ui$Element$Input$white = A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1);
 var $mdgriffith$elm_ui$Element$Input$defaultTextBoxStyle = _List_fromArray(
 	[
@@ -14304,35 +14382,6 @@ var $mdgriffith$elm_ui$Element$transparent = function (on) {
 		$mdgriffith$elm_ui$Internal$Model$StyleClass,
 		$mdgriffith$elm_ui$Internal$Flag$transparency,
 		A2($mdgriffith$elm_ui$Internal$Model$Transparency, 'visible', 0.0));
-};
-var $mdgriffith$elm_ui$Element$Border$widthXY = F2(
-	function (x, y) {
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$borderWidth,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$BorderWidth,
-				'b-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
-				y,
-				x,
-				y,
-				x));
-	});
-var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
-	var bottom = _v0.cg;
-	var top = _v0.dZ;
-	var left = _v0.c1;
-	var right = _v0.dl;
-	return (_Utils_eq(top, bottom) && _Utils_eq(left, right)) ? (_Utils_eq(top, right) ? $mdgriffith$elm_ui$Element$Border$width(top) : A2($mdgriffith$elm_ui$Element$Border$widthXY, left, top)) : A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
-		A5(
-			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
-			'b-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left))))))),
-			top,
-			right,
-			bottom,
-			left));
 };
 var $mdgriffith$elm_ui$Element$Input$defaultCheckbox = function (checked) {
 	return A2(

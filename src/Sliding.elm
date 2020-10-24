@@ -90,27 +90,68 @@ move dir game =
 view : List (Element.Attribute msg) -> Board -> Element msg
 view attrs game =
     let
-        tileel is_space =
-            Element.el <|
-                (if not is_space then
-                    (::) (Element.Border.width 1)
+        gameHeight =
+            List.length game.board // game.width
 
-                 else
-                    Basics.identity
-                )
-                <|
-                    [ Element.width <| Element.px 36, Element.height <| Element.px 36, Element.Font.center ]
-
-        renderedBoard =
-            game.board
-                |> List.map (String.fromInt >> Element.text >> tileel False)
-                |> List.Extra.splitAt game.space
-                |> (\( beginning, end ) -> List.append beginning (tileel True Element.none :: end))
-                |> List.Extra.greedyGroupsOf game.width
-                |> List.map (Element.row [ Element.width Element.fill, Element.centerX ])
-                |> Element.column attrs
+        tileel =
+            viewTile ( game.width, gameHeight )
     in
-    renderedBoard
+    game.board
+        |> List.map (Just >> tileel)
+        |> List.Extra.splitAt game.space
+        |> (\( beginning, end ) -> List.append beginning (tileel Nothing :: end))
+        |> List.Extra.greedyGroupsOf game.width
+        |> List.map (Element.row [ Element.width Element.fill, Element.centerX ])
+        |> Element.column attrs
+
+
+viewTile : ( Int, Int ) -> Maybe Int -> Element msg
+viewTile ( width, height ) value =
+    let
+        tileSize =
+            36
+    in
+    case value of
+        Nothing ->
+            Element.el
+                [ Element.width <| Element.px <| tileSize + 2
+                , Element.height <| Element.px <| tileSize + 2
+                ]
+                Element.none
+
+        Just n ->
+            let
+                borderIf cond =
+                    if cond then
+                        3
+
+                    else
+                        0
+
+                borders =
+                    Element.Border.widthEach
+                        { top = borderIf (n - 1 < width)
+                        , left = borderIf (Basics.modBy width (n - 1) == 0)
+                        , right = borderIf (Basics.modBy width (n - 1) == width - 1)
+                        , bottom = borderIf (n - 1 >= height * width)
+                        }
+            in
+            n
+                |> String.fromInt
+                |> Element.text
+                |> Element.el
+                    [ Element.centerX
+                    , Element.centerY
+                    , Element.Font.size 16
+                    ]
+                |> Element.el
+                    [ Element.width <| Element.px tileSize
+                    , Element.height <| Element.px tileSize
+                    , borders
+                    , Element.Border.rounded 3
+                    , Element.Border.color <| Element.rgb 0.5 0.5 0.5
+                    ]
+                |> Element.el [ Element.Border.width 1, Element.Border.rounded 3 ]
 
 
 listPermutation : List a -> Generator (List a)
